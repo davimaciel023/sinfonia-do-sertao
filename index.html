@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sinfonia do Sertão — Portal dos Profetas da Chuva. Onde a ancestralidade encontra a tecnologia." />
+    <title>Sinfonia do Sertão · Profetas da Chuva</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Botpress Webchat — Profeta Digital -->
+    <script src="https://cdn.botpress.cloud/webchat/v5.0/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2026/08/17/22/20260817223420-K5PUW7YI.js" defer></script>
+
+    <style>
+      /* O indicador de "digitando" do Botpress some antes da resposta chegar,
+         dando impressão de travamento (apontado em teste de usabilidade).
+         Suprimindo o indicador nativo até o Botpress corrigir o timing. */
+      .bpTypingIndicatorContainer{
+        display: none !important;
+      }
+    </style>
+  </body>
+</html>

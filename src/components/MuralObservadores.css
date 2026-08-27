@@ -1,0 +1,13 @@
+.mural-badge{
+  padding: 18px 24px;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 720px;
+  margin-inline: auto;
+  text-align: center;
+}
+.mural-badge strong{ color: var(--accent); }
+
+.mural-carousel{ margin-top: 24px; }
