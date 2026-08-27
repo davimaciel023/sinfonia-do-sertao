@@ -32,7 +32,10 @@
 
 .memorial-card{
   overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
+.memorial-card:hover, .memorial-card:focus-visible{ transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 14px 30px -20px rgba(43, 35, 24, 0.5); outline: none; }
 
 .memorial-card__media{
   position: relative;
@@ -64,3 +67,9 @@
   color: var(--ink-soft);
   line-height: 1.55;
 }
+
+.memorial-dialog-backdrop{ position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 24px; background: rgba(43, 35, 24, 0.55); }
+.memorial-dialog{ position: relative; width: min(520px, 100%); padding: 34px; }
+.memorial-dialog h3{ margin-top: 12px; font-size: 1.8rem; }
+.memorial-dialog p{ margin-top: 14px; color: var(--ink-soft); line-height: 1.65; }
+.memorial-dialog__close{ position: absolute; top: 10px; right: 16px; font-size: 28px; line-height: 1; color: var(--ink-soft); }

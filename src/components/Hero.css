@@ -1,6 +1,6 @@
 .scroll-hero{
   position: relative;
-  height: 145vh;
+  height: 116vh;
   padding: 0;
   margin-top: calc(var(--nav-h) * -1);
 }
@@ -137,7 +137,7 @@
 }
 
 @media (max-width: 700px){
-  .scroll-hero{ height: 130vh; }
+  .scroll-hero{ height: 110vh; }
   .hero-title{ max-width: none; }
   .hero-scrollcue{ display: none; }
 }

@@ -42,7 +42,7 @@ export default function Hero() {
     let raf;
     let lastTs = performance.now();
 
-    const RAIN_MAX = 200;
+    const RAIN_MAX = 110;
     const rain = Array.from({ length: RAIN_MAX }, () => ({
       x: Math.random(),
       y: Math.random(),
