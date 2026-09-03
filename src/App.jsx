@@ -7,6 +7,7 @@ import MemorialExperiencias from "./components/MemorialExperiencias";
 import ChatbotDestaque from "./components/ChatbotDestaque";
 import Footer from "./components/Footer";
 import ClickSpark from "./components/ClickSpark";
+import BotLangoWidget from "./components/BotLango/BotLangoWidget";
 import { useScrollReveal } from "./hooks/useScrollReveal";
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
         <ChatbotDestaque />
       </main>
       <Footer />
+      <BotLangoWidget />
     </>
   );
 }

@@ -14,8 +14,11 @@ const CONVERSA = [
 ];
 
 function openBotCalango() {
-  if (typeof window !== "undefined" && typeof window.botpress?.open === "function") {
-    window.botpress.open();
+  if (typeof window !== "undefined") {
+    // Abre o widget do Bot Lango (src/components/BotLango). Antes chamava
+    // window.botpress.open(); agora dispara um evento que o próprio widget
+    // escuta — mesmo padrão de "abrir de qualquer lugar do site".
+    window.dispatchEvent(new CustomEvent("botlango:open"));
   }
 }
 

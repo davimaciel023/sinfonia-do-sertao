@@ -1,0 +1,422 @@
+/* Bot Lango — mesma paleta e proporções do webchat Botpress original:
+   cor principal #371F14, tema claro, cabeçalho "vidro", bolhas sólidas,
+   arredondamento padrão, fonte do sistema. */
+
+.botlango {
+  --bl-primary: #371f14;
+  --bl-primary-deep: #241209;
+  --bl-on-primary: #fbf3e7;
+  --bl-bg: #ffffff;
+  --bl-bg-soft: #f6f2ea;
+  --bl-border: #e8e1d3;
+  --bl-ink: #23180f;
+  --bl-ink-soft: #7c7266;
+  --bl-radius-lg: 22px;
+  --bl-radius-md: 16px;
+  --bl-radius-sm: 12px;
+  --bl-font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  font-family: var(--bl-font);
+  position: fixed;
+  inset: auto 20px 20px auto;
+  z-index: 2147483000;
+}
+
+.botlango * { box-sizing: border-box; }
+
+/* ---------- botão flutuante ---------- */
+.botlango__toggle {
+  position: relative;
+  z-index: 2;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  overflow: hidden;
+  background: var(--bl-primary);
+  box-shadow: 0 14px 30px -10px rgba(35, 20, 10, 0.55);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.botlango__toggle:hover { transform: translateY(-2px) scale(1.03); }
+.botlango__toggle img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* O botão flutuante continua visível e clicável com o painel aberto —
+   igual ao webchat original, dá pra fechar clicando nele também, não só
+   no X do cabeçalho. */
+
+/* ---------- painel ---------- */
+.botlango__panel {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 40px;
+  width: min(400px, calc(100vw - 32px));
+  height: min(700px, calc(100vh - 68px));
+  /* zera o "padding: 110px 0" global do site (regra `section{...}` em
+     src/index.css) que vazava pro painel, já que ele também é uma
+     <section> — sem isso, sobrava um vão em branco enorme em cima e
+     embaixo do conteúdo. */
+  padding: 0;
+  margin: 0;
+  background: var(--bl-bg);
+  border-radius: var(--bl-radius-lg);
+  box-shadow: 0 24px 60px -18px rgba(30, 18, 8, 0.38), 0 4px 20px rgba(30, 18, 8, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform-origin: bottom right;
+  transform: scale(0.92) translateY(12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2), opacity 0.18s ease;
+}
+.botlango__panel.is-open {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+
+/* ---------- cabeçalho (estilo "vidro") ---------- */
+.botlango__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--bl-border);
+  flex: 0 0 auto;
+}
+.botlango__header-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+.botlango__header-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+}
+.botlango__header-text strong { font-size: 14.5px; color: var(--bl-ink); }
+.botlango__header-text span {
+  font-size: 11.5px;
+  color: var(--bl-ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.botlango__close {
+  margin-left: auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--bl-ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: 0 0 auto;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.botlango__close:hover { background: var(--bl-bg-soft); color: var(--bl-ink); }
+
+/* ---------- tela inicial ---------- */
+.botlango__home {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 22px 20px 18px;
+}
+.botlango__home h2 {
+  font-size: 25px;
+  font-weight: 700;
+  color: var(--bl-ink);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.botlango__subtitle {
+  margin: 6px 0 20px;
+  color: var(--bl-ink-soft);
+  font-size: 14.5px;
+}
+
+.botlango__maincard {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--bl-primary);
+  color: var(--bl-on-primary);
+  border: none;
+  border-radius: var(--bl-radius-md);
+  padding: 16px 18px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.botlango__maincard:hover { background: var(--bl-primary-deep); transform: translateY(-1px); }
+.botlango__maincard-text { display: flex; flex-direction: column; gap: 2px; }
+.botlango__maincard-text strong { font-size: 15.5px; }
+.botlango__maincard-text em { font-style: normal; font-size: 13px; opacity: 0.82; }
+.botlango__maincard-icon {
+  width: 56px;
+  height: 62px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+.botlango__starters {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.botlango__starter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  background: var(--bl-bg);
+  border: 1px solid var(--bl-border);
+  border-radius: var(--bl-radius-sm);
+  padding: 11px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--bl-ink);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.botlango__starter:hover {
+  border-color: var(--bl-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px -12px rgba(35, 20, 10, 0.35);
+}
+.botlango__starter-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: var(--bl-bg-soft);
+  color: var(--bl-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- conversa ---------- */
+.botlango__thread {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/* linha de uma mensagem: avatar (só do bot) + coluna com bolha [+ status] */
+.botlango__row {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+.botlango__row--user { justify-content: flex-end; }
+.botlango__row--assistant { justify-content: flex-start; }
+
+.botlango__row-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+/* mantém o espaço reservado nas mensagens do meio de um grupo, e só
+   mostra o avatar na última bolha consecutiva do bot — igual ao
+   webchat original */
+.botlango__row-avatar--spacer { visibility: hidden; }
+
+.botlango__bubble-col {
+  display: flex;
+  flex-direction: column;
+  max-width: 84%;
+}
+.botlango__row--user .botlango__bubble-col { align-items: flex-end; }
+.botlango__row--assistant .botlango__bubble-col { align-items: flex-start; }
+
+.botlango__bubble {
+  padding: 11px 14px;
+  border-radius: var(--bl-radius-md);
+  font-size: 13.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.botlango__bubble--user {
+  background: var(--bl-primary);
+  color: var(--bl-on-primary);
+  border-bottom-right-radius: 4px;
+}
+.botlango__bubble--assistant {
+  background: var(--bl-bg-soft);
+  border: 1px solid var(--bl-border);
+  color: var(--bl-ink);
+  border-bottom-left-radius: 4px;
+}
+.botlango__bubble--assistant.is-error { color: #8a3b26; border-color: #edd2c4; background: #fbf1ea; }
+
+/* status "Entregue" embaixo da última mensagem do usuário no grupo */
+.botlango__delivered {
+  font-size: 10.5px;
+  color: var(--bl-ink-soft);
+  margin-top: 3px;
+  padding: 0 2px;
+}
+
+.botlango__typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 0;
+}
+.botlango__typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bl-ink-soft);
+  display: block;
+  animation: botlango-bounce 1.1s infinite ease-in-out;
+}
+.botlango__typing i:nth-child(2) { animation-delay: 0.15s; }
+.botlango__typing i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes botlango-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+/* ---------- campo de mensagem ---------- */
+.botlango__composer {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 14px 4px;
+  padding: 6px 8px 6px 14px;
+  border: 1px solid var(--bl-border);
+  border-radius: 100px;
+  background: var(--bl-bg);
+}
+.botlango__composer input {
+  flex: 1 1 auto;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--bl-font);
+  font-size: 13.5px;
+  color: var(--bl-ink);
+  min-width: 0;
+}
+.botlango__composer input::placeholder { color: #a89e8f; }
+.botlango__composer-icon {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bl-ink-soft);
+}
+.botlango__composer-icon--btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.botlango__composer-icon--btn:hover { background: var(--bl-bg-soft); color: var(--bl-ink); }
+
+/* seletor de emojis */
+.botlango__emoji-wrap { position: relative; flex: 0 0 auto; }
+.botlango__emoji-picker {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 0;
+  width: 226px;
+  max-height: 176px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2px;
+  padding: 8px;
+  background: var(--bl-bg);
+  border: 1px solid var(--bl-border);
+  border-radius: var(--bl-radius-sm);
+  box-shadow: 0 14px 30px -12px rgba(30, 18, 8, 0.35);
+  z-index: 3;
+}
+.botlango__emoji-option {
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  line-height: 1;
+  padding: 6px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.botlango__emoji-option:hover { background: var(--bl-bg-soft); }
+
+/* botão de microfone ativo (ditado em andamento) */
+.botlango__composer-icon--btn.is-listening {
+  color: #b3261e;
+  background: #fbe9e7;
+  animation: botlango-mic-pulse 1.1s infinite ease-in-out;
+}
+@keyframes botlango-mic-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.14); }
+}
+
+/* aviso (ex.: microfone sem suporte/permissão) */
+.botlango__notice {
+  flex: 0 0 auto;
+  margin: 0 14px 8px;
+  padding: 7px 12px;
+  font-size: 11.5px;
+  color: #8a3b26;
+  background: #fbf1ea;
+  border: 1px solid #edd2c4;
+  border-radius: var(--bl-radius-sm);
+  text-align: center;
+}
+.botlango__composer-send {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bl-primary);
+  color: var(--bl-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+.botlango__composer-send:hover { background: var(--bl-primary-deep); }
+.botlango__composer-send:disabled { opacity: 0.55; cursor: default; }
+
+/* ---------- rodapé ---------- */
+.botlango__footer {
+  flex: 0 0 auto;
+  text-align: center;
+  font-size: 10.5px;
+  color: var(--bl-ink-soft);
+  padding: 8px 0 12px;
+}
