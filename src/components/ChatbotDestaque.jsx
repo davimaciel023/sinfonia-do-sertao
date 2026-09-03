@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import MagneticButton from "./MagneticButton";
@@ -13,17 +13,23 @@ const CONVERSA = [
   { autor: "bot", texto: "No dia 13 de dezembro, dispõe-se pedrinhas de sal identificadas por mês. Nos dias seguintes, observa-se qual delas umedeceu mais, e isso guia a leitura do ano." },
 ];
 
-function openBotCalango() {
+function openBotLango(fallback) {
   if (typeof window !== "undefined") {
     // Abre o widget do Bot Lango (src/components/BotLango). Antes chamava
     // window.botpress.open(); agora dispara um evento que o próprio widget
     // escuta — mesmo padrão de "abrir de qualquer lugar do site".
     window.dispatchEvent(new CustomEvent("botlango:open"));
+    return;
   }
+  fallback?.focus();
 }
 
 export default function ChatbotDestaque() {
   const bubblesRef = useRef(null);
+  const inputRef = useRef(null);
+  const [messages, setMessages] = useState(CONVERSA);
+  const [question, setQuestion] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const container = bubblesRef.current;
@@ -48,6 +54,19 @@ export default function ChatbotDestaque() {
     return () => ctx.revert();
   }, []);
 
+  function askCalango(event) {
+    event.preventDefault();
+    const text = question.trim();
+    if (!text || loading) return;
+    setQuestion("");
+    setMessages((current) => [...current, { autor: "usuario", texto: text }]);
+    setLoading(true);
+    window.setTimeout(() => {
+      setMessages((current) => [...current, { autor: "bot", texto: "O Calango está consultando o memorial. Observe os sinais com atenção e compare diferentes indícios antes de tirar uma conclusão." }]);
+      setLoading(false);
+    }, 650);
+  }
+
   return (
     <section id="chatbot">
       <div className="container chatbot-layout">
@@ -67,7 +86,7 @@ export default function ChatbotDestaque() {
             <li>Tom acolhedor, como o de um mestre da tradição</li>
           </ul>
 
-          <MagneticButton as="button" variant="accent" size="lg" onClick={openBotCalango}>
+          <MagneticButton as="button" variant="accent" size="lg" onClick={() => openBotLango(inputRef.current)}>
             Conversar com o Bot Calango
           </MagneticButton>
         </div>
@@ -78,12 +97,17 @@ export default function ChatbotDestaque() {
             Bot Calango
           </div>
           <div className="chatbot-mock__body" ref={bubblesRef}>
-            {CONVERSA.map((m, i) => (
+            {messages.map((m, i) => (
               <div className={`chat-bubble chat-bubble--${m.autor}`} key={i}>
                 {m.texto}
               </div>
             ))}
+            {loading && <div className="chat-bubble chat-bubble--bot chat-bubble--loading" role="status">Calango está pensando...</div>}
           </div>
+          <form className="chatbot-compose" onSubmit={askCalango}>
+            <input ref={inputRef} value={question} onChange={(event) => setQuestion(event.target.value)} placeholder="Pergunte sobre um sinal..." aria-label="Pergunta para o Bot Calango" />
+            <button type="submit" aria-label="Enviar pergunta">Enviar</button>
+          </form>
         </div>
       </div>
     </section>
