@@ -52,6 +52,8 @@ export default function MuralObservadores() {
           </p>
         </div>
 
+        <p className="section-label reveal">Arquivo vivo de pessoas e saberes</p>
+
         <div className="mural-badge reveal card-surface">
           <strong>Regra da tradição:</strong> para ser reconhecido como profeta, é preciso
           ter um padrinho: alguém que já observa e que apadrinha a entrada de um novo

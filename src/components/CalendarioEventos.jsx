@@ -53,7 +53,7 @@ export default function CalendarioEventos() {
           </div>
 
           <div className="calendario-noticias">
-            <h3 className="calendario-subtitle reveal">Feed de notícias</h3>
+            <h3 className="calendario-subtitle reveal">Arquivo de eventos e notícias</h3>
             <div className="calendario-noticias__grid">
               {NOTICIAS.map((n) => (
                 <article className="noticia-card card-surface reveal" key={n.titulo}>

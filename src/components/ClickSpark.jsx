@@ -6,7 +6,7 @@ export default function ClickSpark() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    if (isTouch()) return;
+    if (isTouch() || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#d99a3d";
@@ -20,7 +20,7 @@ export default function ClickSpark() {
     resize();
     window.addEventListener("resize", resize);
 
-    const SPARK_COUNT = 8, SPARK_RADIUS = 22, SPARK_SIZE = 9, DURATION = 420;
+    const SPARK_COUNT = 5, SPARK_RADIUS = 14, SPARK_SIZE = 6, DURATION = 280;
 
     function onClick(e) {
       const now = performance.now();

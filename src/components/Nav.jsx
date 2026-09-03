@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Search } from "lucide-react";
 import { IconNuvem } from "./icons";
 import "./Nav.css";
 
@@ -14,6 +15,7 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(LINKS[0].href);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     function onScroll() {
@@ -23,6 +25,19 @@ export default function Nav() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  function searchPage(event) {
+    event.preventDefault();
+    const term = query.trim().toLocaleLowerCase();
+    if (!term) return;
+    const match = LINKS.map((link) => document.querySelector(link.href)).find((section) =>
+      section?.innerText.toLocaleLowerCase().includes(term)
+    );
+    if (match) {
+      match.scrollIntoView({ behavior: "smooth", block: "start" });
+      setQuery("");
+    }
+  }
 
   // Marca no menu em qual seção o usuário está durante o scroll — pedido
   // repetido nos testes de usabilidade (a navegação não indicava a posição
@@ -68,6 +83,11 @@ export default function Nav() {
           Fale com o Bot Calango
         </a>
 
+        <form className="nav__search" onSubmit={searchPage} role="search">
+          <Search size={16} aria-hidden="true" />
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar" aria-label="Buscar no portal" />
+        </form>
+
         <button
           className={`nav__burger ${open ? "is-open" : ""}`}
           aria-label="Abrir menu"
@@ -79,6 +99,10 @@ export default function Nav() {
       </div>
 
       <div className={`nav__mobile ${open ? "is-open" : ""}`}>
+        <form className="nav__search nav__search--mobile" onSubmit={searchPage} role="search">
+          <Search size={16} aria-hidden="true" />
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar no portal" aria-label="Buscar no portal" />
+        </form>
         {LINKS.map((l) => (
           <a
             key={l.href}
